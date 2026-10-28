@@ -42,16 +42,7 @@
 
 <h2>מצאתם בעיית נגישות? נשמח לעזור</h2>
 <p>אפשר לכתוב לנו כאן על כל בעיה או לבקש מידע בפורמט נגיש. נחזור אליכם בהקדם, ובכל מקרה תוך 30 יום.</p>
-<div class="box">
-<form id="contact" novalidate>
-  <label for="msg">מה הבעיה או הבקשה? <span>(חובה)</span></label>
-  <textarea id="msg" name="msg" required maxlength="1800" aria-required="true"></textarea>
-  <label for="email">כתובת מייל לתשובה <span>(רשות - בלעדיה לא נוכל לחזור אליכם)</span></label>
-  <input id="email" name="email" type="email" autocomplete="email" dir="ltr">
-  <button type="submit">שליחה</button>
-  <p class="status" id="status" role="status" aria-live="polite"></p>
-</form>
-</div>
+<p>אפשר לכתוב לנו בדיסקורד: <a href="https://discord.gg/zS29tGNQNy" target="_blank" rel="noopener">הקהילה של AnimeTranslator</a>. נחזור אליכם בהקדם, ובכל מקרה תוך 30 יום.</p>
 <p>אפשר לפנות גם מתוך האפליקציה: כפתור המשוב בתפריט.</p>
 </div></main>
 
@@ -59,22 +50,5 @@
 <a href="/">דף הבית</a><a href="/terms">תנאי שימוש</a><a href="/privacy">מדיניות פרטיות</a>
 </div></footer>
 
-<script>
-// Sent like the app's own feedback (POST /feedback): it lands in the Admin
-// Dashboard, which can answer by email.
-const form = document.getElementById("contact"), status = document.getElementById("status");
-form.addEventListener("submit", async (e) => {
-  e.preventDefault();
-  const msg = form.msg.value.trim(), email = form.email.value.trim();
-  if (!msg) { status.textContent = "צריך לכתוב מה הבעיה."; form.msg.focus(); return; }
-  status.textContent = "שולח...";
-  try {
-    const r = await fetch("/feedback", { method: "POST", headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ rating: 3, message: "[נגישות] " + msg, app_version: "site", reply_email: email || null }) });
-    status.textContent = r.ok ? "נשלח. תודה! נחזור אליכם בהקדם." : (r.status === 422 ? "כתובת המייל לא תקינה." : "השליחה נכשלה - נסו שוב בעוד רגע.");
-    if (r.ok) form.reset();
-  } catch { status.textContent = "אין חיבור כרגע - נסו שוב בעוד רגע."; }
-});
-</script>
 </body>
 </html>
