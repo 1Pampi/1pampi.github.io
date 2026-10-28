@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>הצהרת נגישות - AnimeTranslator</title>
+<meta name="description" content="הצהרת הנגישות של AnimeTranslator: מה הונגש באתר ובאפליקציה, ואיך לפנות אלינו בבקשת נגישות.">
+<link rel="icon" href="/site/favicon.png">
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/site/legal.css">
+</head>
+<body>
+<a class="skip" href="#main">דילוג לתוכן הראשי</a>
+<header><div class="wrap"><a href="/"><img src="/site/logo.png" alt="" width="30" height="30">AnimeTranslator</a></div></header>
+
+<main id="main" tabindex="-1"><div class="wrap">
+<h1>הצהרת נגישות</h1>
+<p class="updated">עודכן לאחרונה: 15 באוקטובר 2026</p>
+
+<p>אנחנו רוצים שכל אחד ואחת יוכלו להשתמש ב-AnimeTranslator, כולל אנשים עם מוגבלות. האתר נבנה בהתאם להנחיות הנגישות לתכני אינטרנט WCAG 2.1 ברמה AA, שעליהן מבוסס התקן הישראלי ת"י 5568.</p>
+
+<h2>מה עשינו באתר</h2>
+<ul>
+<li>מבנה כותרות ואזורים (ניווט, תוכן ראשי, כותרת תחתונה) שקוראי מסך מזהים.</li>
+<li>קישור "דילוג לתוכן הראשי" בתחילת כל עמוד.</li>
+<li>אפשר להשתמש בכל האתר במקלדת בלבד, עם סימון ברור של הפריט שבפוקוס.</li>
+<li>ניגודיות צבעים גבוהה בין טקסט לרקע.</li>
+<li>טקסט חלופי לתמונות, ותיאור מילולי לסרטון ההסבר (הסרטון ללא קול).</li>
+<li>כפתור "עצירת אנימציות" שעוצר את כל התנועה בעמוד, וכיבוד הגדרת "הפחתת תנועה" של מערכת ההפעלה.</li>
+<li>האתר מתאים את עצמו למסכים בכל גודל ותומך בהגדלת טקסט עד 200%.</li>
+<li>בדקנו את העמודים בכלי הבדיקה האוטומטי axe-core (כללי WCAG 2.1 A ו-AA) ללא שגיאות.</li>
+</ul>
+
+<h2>האפליקציה</h2>
+<p>האפליקציה ל-Windows בנויה על Qt ותומכת בניווט במקלדת ובקוראי מסך של Windows. ייתכן שחלק מהמסכים (למשל עורך הכתוביות ומשחקים) עדיין לא נגישים במלואם. נשמח לשמוע על כל קושי ולתקן.</p>
+
+<h2>מגבלות ידועות</h2>
+<ul>
+<li>תוכן שמשתמשים מעלים לספריית הקהילה (כתוביות) אינו בשליטתנו המלאה.</li>
+<li>שירותים חיצוניים שמקושרים מהאתר (כמו Google AI Studio או Stremio) נגישים לפי מדיניות הנגישות שלהם.</li>
+</ul>
+
+<h2>מצאתם בעיית נגישות? נשמח לעזור</h2>
+<p>אפשר לכתוב לנו כאן על כל בעיה או לבקש מידע בפורמט נגיש. נחזור אליכם בהקדם, ובכל מקרה תוך 30 יום.</p>
+<div class="box">
+<form id="contact" novalidate>
+  <label for="msg">מה הבעיה או הבקשה? <span>(חובה)</span></label>
+  <textarea id="msg" name="msg" required maxlength="1800" aria-required="true"></textarea>
+  <label for="email">כתובת מייל לתשובה <span>(רשות - בלעדיה לא נוכל לחזור אליכם)</span></label>
+  <input id="email" name="email" type="email" autocomplete="email" dir="ltr">
+  <button type="submit">שליחה</button>
+  <p class="status" id="status" role="status" aria-live="polite"></p>
+</form>
+</div>
+<p>אפשר לפנות גם מתוך האפליקציה: כפתור המשוב בתפריט.</p>
+</div></main>
+
+<footer><div class="wrap">
+<a href="/">דף הבית</a><a href="/terms">תנאי שימוש</a><a href="/privacy">מדיניות פרטיות</a>
+</div></footer>
+
+<script>
+// Sent like the app's own feedback (POST /feedback): it lands in the Admin
+// Dashboard, which can answer by email.
+const form = document.getElementById("contact"), status = document.getElementById("status");
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const msg = form.msg.value.trim(), email = form.email.value.trim();
+  if (!msg) { status.textContent = "צריך לכתוב מה הבעיה."; form.msg.focus(); return; }
+  status.textContent = "שולח...";
+  try {
+    const r = await fetch("/feedback", { method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ rating: 3, message: "[נגישות] " + msg, app_version: "site", reply_email: email || null }) });
+    status.textContent = r.ok ? "נשלח. תודה! נחזור אליכם בהקדם." : (r.status === 422 ? "כתובת המייל לא תקינה." : "השליחה נכשלה - נסו שוב בעוד רגע.");
+    if (r.ok) form.reset();
+  } catch { status.textContent = "אין חיבור כרגע - נסו שוב בעוד רגע."; }
+});
+</script>
+</body>
+</html>
