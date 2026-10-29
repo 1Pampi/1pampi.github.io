@@ -437,7 +437,23 @@ html.still *, html.still *::before, html.still *::after { animation-play-state: 
             <li><i class="ph-fill ph-check-circle"></i>הגרסה שמתאימה לקובץ שלכם מופיעה ראשונה, עם קרדיט למתרגם</li>
             <li><i class="ph-fill ph-check-circle"></i>עובד במחשב, באנדרואיד, בטלוויזיה וב-Stremio Web</li>
           </ul>
-          <p role="status" style="margin:0 0 22px;padding:12px 16px;border:1px solid var(--line);border-radius:12px;background:var(--surface);color:var(--muted);line-height:1.6;font-size:15px"><strong>התוסף מושהה זמנית</strong> - השרת שלו בתחזוקה. אם התקנתם אותו, הסירו אותו בינתיים: ב-Stremio, תוספים (Add-ons) &gt; AnimeTranslator &gt; הסרה (Uninstall). נעדכן כאן כשהוא יחזור.</p>
+          <p role="status" style="margin:0 0 22px;padding:12px 16px;border:1px solid var(--line);border-radius:12px;background:var(--surface);color:var(--muted);line-height:1.6;font-size:15px"><strong>התוסף עבר לכתובת חדשה.</strong> אם התקנתם אותו בעבר, הסירו את הישן (ב-Stremio: תוספים &gt; AnimeTranslator &gt; הסרה) והתקינו מחדש מהכפתור כאן.</p>
+          <div class="ctas">
+            <a class="btn btn-primary" id="st-install" href="stremio://82-70-216-156.sslip.io/stremio/manifest.json"><i class="ph-bold ph-plus-circle"></i>התקנה בסטרימיו</a>
+            <a class="btn btn-ghost" id="st-web" href="https://web.stremio.com/#/addons?addon=https%3A%2F%2F82-70-216-156.sslip.io%2Fstremio%2Fmanifest.json" target="_blank" rel="noopener"><i class="ph-bold ph-globe"></i>ב-Stremio Web</a>
+          </div>
+          <div class="st-url">
+            <code id="st-manifest">https://82-70-216-156.sslip.io/stremio/manifest.json</code>
+            <button type="button" class="copy" id="st-copy" aria-label="העתקת כתובת התוסף"><i class="ph-bold ph-copy"></i><span>העתקה</span></button>
+          </div>
+          <details class="st-update">
+            <summary>כבר התקנתם? ככה מעדכנים לגרסה החדשה של התוסף</summary>
+            <p>הכתוביות עצמן תמיד מתעדכנות לבד - אין צורך לעשות כלום. רק השם, הלוגו והתמונה של התוסף נשמרים בסטרימיו מרגע ההתקנה, וסטרימיו לא מרענן אותם לבד. כדי לקבל את המראה החדש:</p>
+            <ol>
+              <li>ב-Stremio: תוספים (Add-ons) > AnimeTranslator > הסרה (Uninstall).</li>
+              <li>לוחצים כאן שוב על "התקנה בסטרימיו" ואז Install.</li>
+            </ol>
+          </details>
         </div>
         <div class="st-visual in" aria-hidden="true">
           <div class="player">
@@ -579,6 +595,7 @@ html.still *, html.still *::before, html.still *::after { animation-play-state: 
     <a href="/privacy">מדיניות פרטיות</a>
     <a href="/terms">תנאי שימוש</a>
     <a href="/accessibility">הצהרת נגישות</a>
+    <a href="https://82-70-216-156.sslip.io/stremio/configure">התוסף ל-Stremio</a>
     <span class="end">AnimeTranslator Lite - תרגום אנימה לעברית בחינם: אפליקציית Windows שמתרגמת כתוביות לאנימה בעזרת בינה מלאכותית.</span>
   </div>
 </footer>
@@ -590,6 +607,21 @@ html.still *, html.still *::before, html.still *::after { animation-play-state: 
     for (const e of entries) if (e.isIntersecting) { e.target.classList.add("seen"); io.unobserve(e.target); }
   }, { threshold: 0.18 });
   document.querySelectorAll(".in").forEach((el) => io.observe(el));
+  // The Stremio buttons point at whichever host serves this page.
+  if (location.protocol === "https:") {
+    const manifest = `https://82-70-216-156.sslip.io/stremio/manifest.json`;
+    document.getElementById("st-install").href = `stremio://82-70-216-156.sslip.io/stremio/manifest.json`;
+    document.getElementById("st-web").href = `https://web.stremio.com/#/addons?addon=${encodeURIComponent(manifest)}`;
+    document.getElementById("st-manifest").textContent = manifest;
+  }
+  const copyBtn = document.getElementById("st-copy");
+  copyBtn.addEventListener("click", () => {
+    navigator.clipboard.writeText(document.getElementById("st-manifest").textContent).then(() => {
+      copyBtn.classList.add("done");
+      copyBtn.querySelector("span").textContent = "הועתק";
+      setTimeout(() => { copyBtn.classList.remove("done"); copyBtn.querySelector("span").textContent = "העתקה"; }, 2000);
+    }).catch(() => {});
+  });
 })();
 </script>
 
