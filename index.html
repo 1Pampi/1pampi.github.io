@@ -20,7 +20,7 @@
   "operatingSystem": "Windows 10, Windows 11",
   "inLanguage": "he",
   "url": "https://1pampi.github.io/",
-  "downloadUrl": "https://apps.microsoft.com/detail/9NH919GR49S5",
+  "downloadUrl": "https://82-70-216-156.sslip.io/update/download?asset=setup",
   "image": "https://1pampi.github.io/site/og.jpg",
   "offers": { "@type": "Offer", "price": "0", "priceCurrency": "ILS" },
   "screenshot": "https://1pampi.github.io/site/og.jpg",
@@ -401,7 +401,6 @@ html.still *, html.still *::before, html.still *::after { animation-play-state: 
     <div class="hero-copy">
       <h1 class="reveal">כתוביות בעברית<br><em>לכל סרט, סדרה ואנימה.</em></h1>
       <p class="lead reveal">תרגום אנימה לעברית בחינם, וגם לסרטים ולסדרות: מתרגמים כתוביות לעברית עם בינה מלאכותית, עורכים וצופים - ישר מהמחשב. בלי מנוי.</p>
-      <p class="reveal" role="status" style="margin:0 0 22px;padding:12px 16px;border:1px solid var(--line);border-radius:12px;background:var(--surface);color:var(--muted);line-height:1.6;font-size:15px"><i class="ph-bold ph-wrench" aria-hidden="true"></i> השרת של AnimeTranslator עבר לכתובת חדשה. גרסה 1.4.2 מתחברת אליו לבד; בגרסאות קודמות התרגום עם מפתח משלכם עובד כרגיל, אבל אל תתחברו בהן לחשבון - עדכנו קודם. <a href="https://discord.gg/zS29tGNQNy" target="_blank" rel="noopener">עדכונים בדיסקורד</a></p>
       <div class="ctas reveal">
         <a class="btn btn-primary" href="#download"><i class="ph-bold ph-download-simple"></i>הורדה ל-Windows</a>
         <a class="btn btn-ghost" href="#stremio"><i class="ph-bold ph-puzzle-piece"></i>תוסף ל-Stremio</a>
@@ -437,7 +436,6 @@ html.still *, html.still *::before, html.still *::after { animation-play-state: 
             <li><i class="ph-fill ph-check-circle"></i>הגרסה שמתאימה לקובץ שלכם מופיעה ראשונה, עם קרדיט למתרגם</li>
             <li><i class="ph-fill ph-check-circle"></i>עובד במחשב, באנדרואיד, בטלוויזיה וב-Stremio Web</li>
           </ul>
-          <p role="status" style="margin:0 0 22px;padding:12px 16px;border:1px solid var(--line);border-radius:12px;background:var(--surface);color:var(--muted);line-height:1.6;font-size:15px"><strong>התוסף עבר לכתובת חדשה.</strong> אם התקנתם אותו בעבר, הסירו את הישן (ב-Stremio: תוספים &gt; AnimeTranslator &gt; הסרה) והתקינו מחדש מהכפתור כאן.</p>
           <div class="ctas">
             <a class="btn btn-primary" id="st-install" href="stremio://82-70-216-156.sslip.io/stremio/manifest.json"><i class="ph-bold ph-plus-circle"></i>התקנה בסטרימיו</a>
             <a class="btn btn-ghost" id="st-web" href="https://web.stremio.com/#/addons?addon=https%3A%2F%2F82-70-216-156.sslip.io%2Fstremio%2Fmanifest.json" target="_blank" rel="noopener"><i class="ph-bold ph-globe"></i>ב-Stremio Web</a>
@@ -560,8 +558,8 @@ html.still *, html.still *::before, html.still *::after { animation-play-state: 
         <div>
           <h2 id="download-title">מוכנים לפרק הראשון?</h2>
           <p>התקנה רגילה כמו כל תוכנה, עם עדכונים אוטומטיים ברקע.</p>
-          <a class="btn btn-primary" href="https://apps.microsoft.com/detail/9NH919GR49S5" target="_blank" rel="noopener" id="dl-btn"><i class="ph-bold ph-download-simple"></i>הורדה ל-Windows</a>
-          <div class="meta"><span id="version">גרסה 1.4.1 · Windows 10 / 11, 64 ביט</span> · <a href="https://apps.microsoft.com/detail/9NH919GR49S5" target="_blank" rel="noopener">ב-Microsoft Store</a></div>
+          <a class="btn btn-primary" href="https://82-70-216-156.sslip.io/update/download?asset=setup" id="dl-btn"><i class="ph-bold ph-download-simple"></i>הורדה ל-Windows</a>
+          <div class="meta"><span id="version">Windows 10 / 11, 64 ביט</span> · <a href="https://82-70-216-156.sslip.io/update/download">גרסה ניידת בלי התקנה</a></div>
         </div>
         <ul>
           <li><i class="ph-fill ph-check-circle"></i><div>קיצור דרך בשולחן העבודה ובתפריט התחל<br><span>ההתקנה שואלת, אתם מחליטים.</span></div></li>
@@ -622,6 +620,11 @@ html.still *, html.still *::before, html.still *::after { animation-play-state: 
       setTimeout(() => { copyBtn.classList.remove("done"); copyBtn.querySelector("span").textContent = "העתקה"; }, 2000);
     }).catch(() => {});
   });
+  // The real current version, from the same server the app updates from.
+  fetch("https://82-70-216-156.sslip.io/version").then((r) => r.json()).then((v) => {
+    if (v && v.latest_version) document.getElementById("version").textContent =
+      `גרסה ${v.latest_version} · Windows 10 / 11, 64 ביט`;
+  }).catch(() => {});
 })();
 </script>
 
