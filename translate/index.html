@@ -79,7 +79,7 @@ width:100%;flex-direction:row;justify-content:space-around;border:0;border-botto
 padding:6px}.rail .logo,.rail .spacer{display:none}.nav{width:auto;flex:1}main{padding:16px}
 .title{flex-direction:column}.title .poster{width:140px}.who{display:none}
 .drop{min-height:240px}.drop form{flex-direction:column}}
-</style></head><body><nav class="rail" aria-label="ניווט"><a href="https://1pampi.github.io/"><img class="logo" src="https://1pampi.github.io/site/icon-192.png" alt="AnimeTranslator"></a><a class="nav" href="https://1pampi.github.io/"><i class="fa-solid fa-language"></i>תרגום</a><a class="nav" href="https://1pampi.github.io/shows/"><i class="fa-solid fa-fire"></i>גילוי</a><a class="nav on" href="https://1pampi.github.io/translate/"><i class="fa-solid fa-pen"></i>תרגום בדפדפן</a><a class="nav" href="https://1pampi.github.io/about/"><i class="fa-solid fa-lightbulb"></i>עזרה</a><span class="spacer"></span><a class="nav" href="https://1pampi.github.io/download/"><i class="fa-solid fa-download"></i>הורדה</a></nav><main><div class="head"><div class="grow"><h1 class="hello">תרגום בדפדפן</h1><p class="sub">תרגום כתוביות לעברית ישר בדפדפן - חינם, עם המפתח שלכם. לתרגום מהסרטון עצמו, ולכל הכלים, יש את האפליקציה.</p></div></div><section class="panel"><h2>1. מפתח Gemini (חינם)</h2><input id="key" type="password" autocomplete="off" placeholder="הדביקו כאן את המפתח"><p class="hint">המפתח נשמר רק בדפדפן שלכם ונשלח רק לגוגל. <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">לקבלת מפתח חינם (דקה אחת)</a></p></section><section class="panel"><h2>2. איזו סדרה או סרט?</h2><input id="q" type="search" placeholder="למשל: Frieren"><div id="results" class="grid" style="margin-top:16px"></div></section><section id="step2" class="panel hidden"><h2 id="pickTitle"></h2><div id="episodeRow"><select id="episodes"></select></div><div id="versionRow" class="hidden" style="margin-top:10px"><p class="hint">יש כמה גרסאות של הכתוביות - בחרו את הגרסה של הקובץ שלכם (אם אתם יודעים):</p><select id="version"></select></div><div class="flex" style="margin-top:12px"><button id="go" class="btn">תרגום לעברית</button><button id="save" class="btn ghost hidden">הורדת הכתוביות</button><span></span></div><div class="bar"><i id="fill"></i></div><div id="status"></div></section><style>
+</style></head><body><nav class="rail" aria-label="ניווט"><a href="https://1pampi.github.io/"><img class="logo" src="https://1pampi.github.io/site/icon-192.png" alt="AnimeTranslator"></a><a class="nav" href="https://1pampi.github.io/"><i class="fa-solid fa-language"></i>תרגום</a><a class="nav" href="https://1pampi.github.io/shows/"><i class="fa-solid fa-fire"></i>גילוי</a><a class="nav on" href="https://1pampi.github.io/translate/"><i class="fa-solid fa-pen"></i>תרגום בדפדפן</a><a class="nav" href="https://1pampi.github.io/about/"><i class="fa-solid fa-lightbulb"></i>עזרה</a><span class="spacer"></span><a class="nav" href="https://1pampi.github.io/download/"><i class="fa-solid fa-download"></i>הורדה</a></nav><main><div class="head"><div class="grow"><h1 class="hello">תרגום בדפדפן</h1><p class="sub">תרגום כתוביות לעברית ישר בדפדפן - חינם, עם המפתח שלכם. לתרגום מהסרטון עצמו, ולכל הכלים, יש את האפליקציה.</p></div></div><section class="panel"><h2>1. מפתח Gemini (חינם)</h2><input id="key" type="password" autocomplete="off" placeholder="הדביקו כאן את המפתח"><p class="hint">המפתח נשמר רק בדפדפן שלכם ונשלח רק לגוגל. <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">לקבלת מפתח חינם (דקה אחת)</a></p></section><section class="panel"><h2>2. איזו סדרה או סרט?</h2><input id="q" type="search" placeholder="למשל: Frieren"><div id="results" class="grid" style="margin-top:16px"></div><p class="hint" style="margin-top:16px">או: יש לכם קובץ כתוביות משלכם (באנגלית או בכל שפה)? בחרו אותו כאן - הוא נקרא רק בדפדפן שלכם:</p><input id="file" type="file" accept=".srt,.vtt"></section><section id="step2" class="panel hidden"><h2 id="pickTitle"></h2><div id="episodeRow"><select id="episodes"></select></div><div id="versionRow" class="hidden" style="margin-top:10px"><p class="hint">יש כמה גרסאות של הכתוביות - בחרו את הגרסה של הקובץ שלכם (אם אתם יודעים):</p><select id="version"></select></div><div class="flex" style="margin-top:12px"><button id="go" class="btn">תרגום לעברית</button><button id="save" class="btn ghost hidden">הורדת הכתוביות</button><span></span></div><div class="bar"><i id="fill"></i></div><div id="status"></div></section><style>
 .panel{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:20px;
 margin-bottom:18px}
 .panel h2{margin:0 0 10px;font-size:18px}
@@ -150,6 +150,7 @@ async function pick(item) {
   $("go").textContent = "תרגום לעברית"; $("fill").style.width = "0";
   $("pickTitle").textContent = item.name;
   $("step2").classList.remove("hidden");
+  $("versionRow").classList.add("hidden");
   $("episodes").innerHTML = "";
   $("episodeRow").classList.toggle("hidden", item.kind === "movie");
   if (item.kind === "series") {
@@ -230,7 +231,7 @@ $("go").addEventListener("click", async () => {
   const key = keyBox.value.trim();
   if (!key) { status("צריך מפתח של Gemini (חינם) - הקישור מתחת לשדה."); keyBox.focus(); return; }
   if (!chosen) return;
-  const spot = chosen.kind === "movie" ? "" : ":" + $("episodes").value;
+  const spot = chosen.kind === "series" ? ":" + $("episodes").value : "";
   $("go").disabled = true; $("save").classList.add("hidden"); result = null;
   try {
     // A run that stopped half way continues from where it stopped.
@@ -261,6 +262,31 @@ $("go").addEventListener("click", async () => {
       $("go").textContent = "להמשיך";
     }
   } finally { $("go").disabled = false; }
+});
+
+// The visitor's own subtitles file (a user asked): read in the browser,
+// translated the same way; nothing is uploaded anywhere but to Google.
+$("file").addEventListener("change", async () => {
+  const f = $("file").files[0];
+  if (!f) return;
+  if (f.size > 3 * 1024 * 1024) { status("הקובץ גדול מדי."); return; }
+  // WebVTT times use a dot; SRT needs a comma. Cue settings after the time are dropped.
+  const text = (await f.text()).replace(/\r/g, "").replace(/^\uFEFF?WEBVTT[^\n]*\n/, "")
+    .replace(/(^|[^:\d])(\d\d:\d\d\.\d{3})/gm, (m, a, t) => a + "00:" + t)  // VTT may omit the hours
+    .replace(/(\d\d:\d\d:\d\d)\.(\d{3})/g, "$1,$2")
+    .replace(/(\d\d:\d\d:\d\d,\d{3}) --> (\d\d:\d\d:\d\d,\d{3})[^\n]*/g, "$1 --> $2");
+  const cues = parseSrt(text);
+  if (!cues.length) { status("לא הצלחתי לקרוא את הקובץ - צריך קובץ כתוביות ‎.srt‎ או ‎.vtt‎."); return; }
+  const name = f.name.replace(/\.[^.]+$/, "");
+  chosen = { id: "file:" + f.name + ":" + f.size, name, kind: "file" };
+  progress = { where: chosen.id, cues, done: [] };
+  $("go").textContent = "תרגום לעברית"; $("fill").style.width = "0";
+  $("save").classList.add("hidden");
+  $("pickTitle").textContent = `${f.name} · ${cues.length} שורות`;
+  $("episodeRow").classList.add("hidden"); $("versionRow").classList.add("hidden");
+  $("step2").classList.remove("hidden");
+  status("");
+  $("step2").scrollIntoView({ behavior: "smooth" });
 });
 
 $("save").addEventListener("click", () => {
