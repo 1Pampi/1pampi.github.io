@@ -308,6 +308,15 @@ async function review(cues, done) {
   reviewNote = "";
   if (!SERVER || account === null || !$("review").checked) return 0;
   await checkAccount();  // a fresh token for a long run
+  // The show's community rules (approved STYLE rules, word swaps) - what
+  // the desktop app sends the reviewer; the site sent none (21.11.2026).
+  let notes = [];
+  if (chosen) {
+    const g = await fetch(`${SERVER}/learning/series-glossary?series=${encodeURIComponent(chosen.name)}`,
+      { headers: { Authorization: `Bearer ${token()}` } }).catch(() => null);
+    const j = g && g.ok ? await g.json().catch(() => null) : null;
+    if (j && Array.isArray(j.hints)) notes = j.hints.slice(0, 40).map((h) => String(h).slice(0, 300));
+  }
   const starts = [];
   for (let i = 0; i < cues.length; i += 40) starts.push(i);
   let fixed = 0, next = 0, stop = false, busy = 0, finished = 0;
@@ -321,7 +330,7 @@ async function review(cues, done) {
     }
     const r = await fetch(`${SERVER}/review/batch`, { method: "POST",
       headers: { "Content-Type": "application/json", Authorization: `Bearer ${token()}` },
-      body: JSON.stringify({ notes: [], lines }) }).catch(() => null);
+      body: JSON.stringify({ notes, lines }) }).catch(() => null);
     if (!r || [401, 403, 404, 503].includes(r.status)) { stop = true; reviewNote = " הבודק המשותף לא זמין כרגע - התרגום נשאר כמו שהוא."; return; }
     if (r.status === 429) { if (++busy >= 3) { stop = true; reviewNote = " הבודק המשותף עמוס - חלק מהשורות לא נבדקו."; } return; }
     if (!r.ok) { reviewNote = " חלק מהשורות לא נבדקו."; return; }
