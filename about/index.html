@@ -77,7 +77,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,400;0,500;0,700;0,800;1,700&display=swap" rel="stylesheet">
-<script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+<script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js" integrity="sha384-cPFV+/abYd3INVFHPmSKpBmcnH+Q+bTZW7dv/EiuShUNPkHyFmRF8PsL7Ibfvunk" crossorigin="anonymous"></script>
 <style>
 :root {
   --bg: #0d0e10;
@@ -385,6 +385,8 @@ html.still *, html.still *::before, html.still *::after { animation-play-state: 
   .btn, .cell { transition: none; }
 }
 </style>
+<!-- Checked before it runs: a changed copy on the CDN is refused (an audit, 25.11.2026). -->
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js" integrity="sha384-61S/Nu32S3E5+n+KpCOTb2eRYps6fVKm+9Gz1QBvSePFthb46f063Aa/qe/lykFZ" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"><style>
 :root{--bg:#0f1012!important;--bg-2:#121316!important;--surface:#18191c!important;
 --accent:#ececee!important;--accent-ink:#0f1012!important;--muted:#9b9ca3!important}
@@ -615,6 +617,8 @@ padding:6px}.rail .logo,.rail .spacer{display:none}.rail .nav{width:auto;flex:1}
           <p>AnimeTranslator is a free app that translates anime subtitles into Hebrew with AI, plus a free Stremio add-on that shows the community's Hebrew subtitles for every translated episode.</p></details>
         <details class="in"><summary>ומה אם לפרק אין כתוביות בכלל?</summary>
           <p>האפליקציה מחפשת כתוביות יפניות ב-Jimaku, ואם אין, מתמללת את הדיבור לבד על המחשב שלכם.</p></details>
+        <details class="in"><summary>אפשר לחבר את הבינה המלאכותית שלי לאפליקציה?</summary>
+          <p>כן. בהגדרות, תחת "תרגום", לוחצים על "חבר את הבינה המלאכותית שלך", והאפליקציה מתחברת לבד לקלוד, ל-VS Code, ל-Cursor, ל-Gemini CLI ול-Codex שמותקנים אצלכם. אחרי זה אפשר לבקש מהבינה המלאכותית לבדוק תרגום, לתקן שורות, לחפש בקהילה ולפתוח פרקים לתרגום. החיבור נשאר רק במחשב שלכם. לתורמים יש גם צריבה לסרטון, תזמון אוטומטי ועריכת שלטים.</p></details>
       </div>
     </div>
   </section>
